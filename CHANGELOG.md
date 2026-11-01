@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+- Add an original Archive Bridge app icon at 16–256 pixel sizes in Windows executables.
+- Match the local wizard brand and browser favicon to the executable icon.
+
+
 ## 0.3.0
 
 - Add an explicit image-link option: known generic card previews and bounded read-only URL lookups for owned photo assets.

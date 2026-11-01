@@ -200,9 +200,15 @@ def create_server(app, port=0):
                 self.result({"error": "Not found"}, 404)
                 return
             file = WEB / (
-                {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css"}.get(
-                    path, "__missing__"
-                )
+                {
+                    "/": "index.html",
+                    "/app.js": "app.js",
+                    "/style.css": "style.css",
+                    "/icon.svg": "icon.svg",
+                    "/icon.png": "icon.png",
+                    "/icon.ico": "icon.ico",
+                    "/favicon.ico": "icon.ico",
+                }.get(path, "__missing__")
             )
             if file.is_file():
                 self.send(
@@ -212,6 +218,9 @@ def create_server(app, port=0):
                         ".html": "text/html; charset=utf-8",
                         ".js": "text/javascript; charset=utf-8",
                         ".css": "text/css; charset=utf-8",
+                        ".svg": "image/svg+xml",
+                        ".png": "image/png",
+                        ".ico": "image/x-icon",
                     }[file.suffix],
                 )
                 return

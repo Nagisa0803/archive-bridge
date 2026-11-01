@@ -23,6 +23,11 @@ subprocess.run(
         "archive-bridge",
         "--collect-data",
         "archive_bridge",
+        *(
+            ["--icon", str(ROOT / "src/archive_bridge/web/icon.ico")]
+            if args.platform == "windows"
+            else []
+        ),
         str(ROOT / "launcher.py"),
     ],
     cwd=ROOT,
