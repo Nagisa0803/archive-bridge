@@ -8,6 +8,14 @@ A local account exporter for **[Archive Lens](https://github.com/Nagisa0803/arch
 
 **Current stable release: [v0.2.1](https://github.com/Nagisa0803/archive-bridge/releases/latest).** Before every sign-in, Bridge reads the latest official Japanese Android version. CI uses synthetic accounts, never real credentials.
 
+
+### Image links (v0.3.0)
+
+The local wizard enables **Include image links** by default; clear it to skip extra photo reads. After your explicit collection consent, Bridge records known generic card-preview URLs and queries only asset IDs already in your account photo records (batches of at most 50). It never guesses missing URLs or downloads image files.
+
+The ZIP adds `image-links.json`, `image-links.csv`, `image-links.txt`, and a Lens-compatible `photo-links.json`; card/photo mappings are also attached to `account.json`. Photo links may expire or contain access parameters. Keep the entire archive and its links private. Missing card previews and photo URLs are counted in coverage; a returned URL is not proof that an image was backed up. No new live account authentication was used to validate this release; the integration is covered by synthetic tests.
+
+
 ## Download the right build
 
 Each version publishes six native packages, after all six jobs pass tests and compiled-program self-tests.

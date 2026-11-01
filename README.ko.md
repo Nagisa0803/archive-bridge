@@ -6,6 +6,14 @@
 
 **[다운로드](https://github.com/Nagisa0803/archive-bridge/releases)** · **[온라인 뷰어](https://archive-lens.chiyoda-site.workers.dev/)** · **[사용 가이드](https://archive-lens.chiyoda-site.workers.dev/guide/?lang=ko)**
 
+
+### 이미지 링크(v0.3.0)
+
+로컬 화면의 이미지 링크 옵션은 기본 켜짐이며 끄면 추가 사진 요청을 건너뜁니다. 동의 후 계정에 이미 존재하는 사진 리소스 ID만 최대 50개씩 조회합니다. 카드는 알려진 공통 미리보기 URL을 사용합니다. 누락 URL을 추측하거나 이미지 파일을 내려받지 않습니다.
+
+ZIP에 `image-links.json`, `image-links.csv`, `image-links.txt`, `photo-links.json` 및 `account.json`의 매핑이 추가됩니다. URL은 만료되거나 접근 매개변수를 포함할 수 있으므로 비공개로 보관하세요. URL 확보는 이미지 백업 완료를 뜻하지 않습니다. 새 통합은 합성 데이터로 검증했으며 실제 계정을 다시 인증하지 않았습니다.
+
+
 ## 다운로드와 첫 사용
 
 Windows, macOS, Linux 각각 x64와 ARM64 네이티브 패키지를 제공합니다. OS와 CPU가 모두 맞는 파일을 선택하고 `_internal`을 포함한 폴더 전체를 압축 해제하세요. Python, ADB, root, 주입, APK 수정이 필요하지 않습니다.

@@ -5,7 +5,15 @@ from .archive import write_archive, json_bytes, fingerprint
 from .errors import BridgeError
 
 
-def collect(transport, uid, password, output, progress=lambda **kw: None):
+def collect(
+    transport,
+    uid,
+    password,
+    output,
+    progress=lambda **kw: None,
+    *,
+    include_image_links=False,
+):
     uid = uid.strip()
     if not re.fullmatch(r"[A-Za-z0-9]{4,64}", uid) or not re.fullmatch(
         r"[A-Za-z0-9]{8,16}", password
@@ -111,11 +119,29 @@ def collect(transport, uid, password, output, progress=lambda **kw: None):
                 "errorCode": e.code if isinstance(e, BridgeError) else "READ_FAILED",
             }
         )
+    image_links = None
+    if include_image_links:
+        from .image_links import collect_image_links
+
+        image_links, coverage["imageLinks"] = collect_image_links(
+            user, rpc, token, version, extra, failures, transport.check, progress
+        )
+    else:
+        coverage["imageLinks"] = {"requested": False}
     coverage["supplementalFailures"] = failures
     transport.check()
     progress(stage="save", percent=95, backup=base)
     result = write_archive(
-        output, user, raw, master, master_raw, calls, coverage, extra, supplemental
+        output,
+        user,
+        raw,
+        master,
+        master_raw,
+        calls,
+        coverage,
+        extra,
+        supplemental,
+        image_links,
     )
     progress(stage="done", percent=100, backup=result)
     token = None

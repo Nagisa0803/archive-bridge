@@ -6,6 +6,14 @@
 
 **[下载版本](https://github.com/Nagisa0803/archive-bridge/releases)** · **[在线查看器](https://archive-lens.chiyoda-site.workers.dev/)** · **[导出与导入指南](https://archive-lens.chiyoda-site.workers.dev/guide/?lang=zh)**
 
+
+### 图片链接（v0.3.0）
+
+本机向导默认勾选“包含图片链接”，可取消以跳过额外照片请求。明确同意采集后，仅查询帐号已存在照片的资源ID，每批最多50个；卡面使用已知通用预览地址，不猜测缺失链接，不下载图片文件。
+
+ZIP新增 `image-links.json`、`image-links.csv`、`image-links.txt`、`photo-links.json`，并在 `account.json` 中保存对应关系，可直接导入Lens。照片链接可能过期或携带访问参数，请保持私密。覆盖信息分别记录缺失项；获得链接不等于已备份图片。新版整合采用合成数据回归，未重新进行真实帐号认证测试。
+
+
 ## 下载和使用
 
 每个版本在全部检查通过后发布六个原生包：Windows、macOS、Linux 各有 x64 和 ARM64。选择与系统及 CPU 同时匹配的文件，完整解压目录（保留 `_internal`）。无需安装 Python、ADB、Root、注入或改包。

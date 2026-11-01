@@ -23,6 +23,7 @@ ALLOWED = frozenset(
         "/api.Master/Get",
         "/api.User/Get",
         "/api.Migration/List",
+        "/api.Photo/GetImageURL",
     ]
 )
 

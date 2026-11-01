@@ -33,6 +33,7 @@ def write_archive(
     coverage,
     extra=None,
     supplemental=None,
+    image_links=None,
 ):
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -50,6 +51,9 @@ def write_archive(
         "coverage": coverage,
         "supplemental": supplemental or [],
     }
+    if image_links is not None:
+        snapshot["cardImageLinks"] = image_links["cardImageLinks"]
+        snapshot["photoLinks"] = image_links["photoLinks"]
     files = {
         "account.json": json_bytes(snapshot),
         "raw/user.pb": raw,

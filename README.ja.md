@@ -6,6 +6,14 @@
 
 **[ダウンロード](https://github.com/Nagisa0803/archive-bridge/releases)** · **[閲覧サイト](https://archive-lens.chiyoda-site.workers.dev/)** · **[利用ガイド](https://archive-lens.chiyoda-site.workers.dev/guide/?lang=ja)**
 
+
+### 画像リンク（v0.3.0）
+
+ローカル画面では画像リンクを初期有効にし、無効にすると追加の写真URL取得を省略します。同意後、所持写真の資産IDのみを最大50件ずつ照会します。カードは既知の共通プレビューURLを使用し、欠落URLを推測せず、画像本体もダウンロードしません。
+
+ZIPには `image-links.json`、`image-links.csv`、`image-links.txt`、`photo-links.json` と `account.json` 内の対応を保存します。URLは期限切れやアクセスパラメーターを含む場合があるため非公開で保管してください。URL取得は画像バックアップ完了を意味しません。新版の結合テストは合成データで実施し、実アカウントの再認証はしていません。
+
+
 ## ダウンロードと初回利用
 
 Windows・macOS・Linuxそれぞれにx64とARM64のネイティブ版を公開します。OSとCPUの両方に合うファイルを選び、`_internal` を含むディレクトリ全体を展開してください。Python、ADB、root、注入、APK改変は不要です。

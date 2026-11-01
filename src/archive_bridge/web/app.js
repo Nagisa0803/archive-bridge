@@ -1,4 +1,16 @@
 const COPY = {
+  photo_links: [
+    "Reading owned photo URLs",
+    "正在读取已有照片链接",
+    "所持写真URLを取得中",
+    "보유 사진 URL 읽는 중",
+  ],
+  imageLinks: [
+    "Include card-preview links and owned photo original/thumbnail URLs. Adds read-only photo URL requests; does not download image files. Links are private and may expire.",
+    "包含卡面预览和已有照片原图/缩略图链接。会增加只读照片链接请求，不下载图片文件。链接属于私密数据，可能失效。",
+    "カードプレビューと所持写真の原本・サムネイルURLを含めます。写真URLの読み取りのみを追加し、画像本体はダウンロードしません。URLは非公開情報で、期限切れになる場合があります。",
+    "카드 미리보기와 보유 사진 원본/썸네일 URL을 포함합니다. 읽기 전용 사진 URL 요청만 추가하며 이미지 파일은 받지 않습니다. 링크는 비공개 정보이며 만료될 수 있습니다.",
+  ],
   title: [
     "Your account, in your own archive.",
     "把帐号，保存在自己手中。",
@@ -398,6 +410,7 @@ $("#form").addEventListener("submit", async (e) => {
     password: $("#password").value,
     proxy: $("#proxy").value.trim(),
     confirm: $("#confirm").checked,
+    includeImageLinks: $("#image-links").checked,
   };
   $("#password").value = "";
   noticeKey = "";

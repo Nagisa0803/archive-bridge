@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+- Add an explicit image-link option: known generic card previews and bounded read-only URL lookups for owned photo assets.
+- Export private JSON/CSV/TXT link files and Lens-compatible embedded photo mappings; originals are not downloaded.
+- Preserve the primary account ZIP if optional URL reads fail; report missing URLs without guessing.
+- Add synthetic scope, opt-out, empty-account, partial-failure and unsafe-URL regression checks.
+
+
 ## 0.2.1
 
 - Remove the local access capability from the address bar immediately after reading it.

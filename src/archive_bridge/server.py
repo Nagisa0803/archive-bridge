@@ -105,6 +105,7 @@ class Application:
                 password,
                 self.output,
                 self.progress,
+                include_image_links=values.get("includeImageLinks") is True,
             )
             self.progress(status="complete")
         except BridgeError as e:
