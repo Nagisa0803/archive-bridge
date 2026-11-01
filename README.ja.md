@@ -20,15 +20,14 @@ ZIPには `image-links.json`、`image-links.csv`、`image-links.txt`、`photo-li
 
 ## ダウンロードと初回利用
 
-Windows・macOS・Linuxそれぞれにx64とARM64のネイティブ版を公開します。OSとCPUの両方に合うファイルを選び、`_internal` を含むディレクトリ全体を展開してください。Python、ADB、root、注入、APK改変は不要です。
+Windows・Linuxそれぞれにx64とARM64のネイティブ版を公開します。OSとCPUの両方に合うファイルを選び、`_internal` を含むディレクトリ全体を展開してください。Python、ADB、root、注入、APK改変は不要です。
 
 | OS | x64 | ARM64 |
 | --- | --- | --- |
 | Windows | `windows-x64.zip`、Windows 10/11向け | `windows-arm64.zip`、Windows 11 ARM |
 | Linux | `linux-x64.tar.gz`、Ubuntu 22.04 / glibc 2.35+ | `linux-arm64.tar.gz`、Ubuntu 24.04 / glibc 2.39+ |
-| macOS | `macos-x64.tar.gz`、macOS 15 Intelで確認 | `macos-arm64.tar.gz`、macOS 15 Apple Siliconで確認 |
 
-1. Windowsでは `archive-bridge.exe`、Linux/macOSでは `./archive-bridge` を起動します。ローカルの案内画面が自動で開きます。開かない場合は端末に表示された完全なURLを使用します。
+1. Windowsでは `archive-bridge.exe`、Linuxでは `./archive-bridge` を起動します。ローカルの案内画面が自動で開きます。開かない場合は端末に表示された完全なURLを使用します。
 2. 自分の未改変 **日本版Androidの元のAPK/XAPK**（最大512 MiB）を選択します。公開認証プロジェクト設定のみローカルで読み取り、一時ファイルは削除します。再起動時は再設定が必要です。APKをインターネットへ送信せず、ゲームも変更しません。
 3. ゲームで連携パスワードを設定し、ユーザーIDと連携パスワードをローカル画面に入力します。Google/Appleのパスワードではありません。チャットやIssueへ投稿しないでください。
 4. 自分のアカウントであることと認証・必要な読み取りを許可し、認証・ZIP作成を1回実行します。他端末のゲームセッションに影響する場合があります。連携実行を自動再試行しません。

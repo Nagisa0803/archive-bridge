@@ -7,7 +7,7 @@ Archive Bridge is a small, explicit exporter, with the same local ZIP contract c
 - [yt-dlp installation](https://github.com/yt-dlp/yt-dlp/wiki/Installation) and [releases](https://github.com/yt-dlp/yt-dlp/releases): recognizable platform/architecture packages, versioned downloads, checksums and a source-install alternative.
 - [rclone configuration and progress](https://rclone.org/docs/) and [flags](https://rclone.org/flags/): visible progress, explicit network/output configuration and separation of normal operation from advanced options.
 - [restic release verification](https://restic.readthedocs.io/en/v0.17.0/developer_information.html): release integrity and testing the binary users receive, rather than trusting source tests alone.
-- [PyInstaller manual](https://pyinstaller.org/en/latest/): build on each native operating system; a Windows build is not a cross-compiler for macOS or Linux.
+- [PyInstaller manual](https://pyinstaller.org/en/latest/): build on each native operating system; Windows and Linux packages require their respective native operating systems.
 
 These are design references, not dependencies or claims of equivalent maturity.
 
@@ -25,6 +25,6 @@ Coverage is a first-class field, not a success badge implying all game content w
 
 ## Release quality gate
 
-Native x64 and ARM64 runners for Windows, macOS and Linux run offline identity/serialization/failure/security tests, optimized-Python tests, source scanning and packaged-executable self-tests. The release job depends on the entire matrix and requires exactly six package assets. Packages include dependency versions/notices, upstream license and a checksum manifest.
+Native x64 and ARM64 runners for Windows and Linux run offline identity/serialization/failure/security tests, optimized-Python tests, source scanning and packaged-executable self-tests. The release job depends on the entire matrix and requires exactly four package assets. Packages include dependency versions/notices, upstream license and a checksum manifest.
 
 Version 0.3.0 adds explicitly selectable card-preview and owned-photo URL export; it does not download photo originals. Before any authentication, each collection reads the current official Japanese Android version. Same-major header updates do not guarantee unchanged schemas: response validation remains enabled and unsupported new protocol majors stop before authentication. Signed/notarized installers, broader game-version profiles and separately consented media/history modules are future work, not implemented features.

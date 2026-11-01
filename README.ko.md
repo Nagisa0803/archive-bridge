@@ -20,15 +20,14 @@ ZIP에 `image-links.json`, `image-links.csv`, `image-links.txt`, `photo-links.js
 
 ## 다운로드와 첫 사용
 
-Windows, macOS, Linux 각각 x64와 ARM64 네이티브 패키지를 제공합니다. OS와 CPU가 모두 맞는 파일을 선택하고 `_internal`을 포함한 폴더 전체를 압축 해제하세요. Python, ADB, root, 주입, APK 수정이 필요하지 않습니다.
+Windows, Linux 각각 x64와 ARM64 네이티브 패키지를 제공합니다. OS와 CPU가 모두 맞는 파일을 선택하고 `_internal`을 포함한 폴더 전체를 압축 해제하세요. Python, ADB, root, 주입, APK 수정이 필요하지 않습니다.
 
 | 운영체제 | x64 | ARM64 |
 | --- | --- | --- |
 | Windows | `windows-x64.zip`, Windows 10/11 대상 | `windows-arm64.zip`, Windows 11 ARM |
 | Linux | `linux-x64.tar.gz`, Ubuntu 22.04 / glibc 2.35+ | `linux-arm64.tar.gz`, Ubuntu 24.04 / glibc 2.39+ |
-| macOS | `macos-x64.tar.gz`, macOS 15 Intel 검증 | `macos-arm64.tar.gz`, macOS 15 Apple Silicon 검증 |
 
-1. Windows에서는 `archive-bridge.exe`, Linux/macOS에서는 `./archive-bridge`를 실행합니다. 로컬 안내 화면이 자동으로 열립니다. 열리지 않으면 터미널에 표시된 전체 로컬 URL을 여세요.
+1. Windows에서는 `archive-bridge.exe`, Linux에서는 `./archive-bridge`를 실행합니다. 로컬 안내 화면이 자동으로 열립니다. 열리지 않으면 터미널에 표시된 전체 로컬 URL을 여세요.
 2. 본인의 수정하지 않은 **일본판 원본 Android APK/XAPK**(최대 512 MiB)를 선택하세요. 공개 인증 프로젝트 설정만 로컬에서 읽고 임시 파일을 삭제합니다. 재시작하면 다시 설정해야 하며 APK를 인터넷에 올리거나 게임을 수정하지 않습니다.
 3. 게임에서 연동 비밀번호를 설정하고 로컬 화면에 게임 연동 ID와 비밀번호를 입력하세요. Google/Apple 비밀번호가 아닙니다. 채팅이나 Issue에 보내지 마세요.
 4. 본인 계정과 인증·필요한 읽기를 명시적으로 허용한 후 인증 및 ZIP 내보내기를 한 번 실행하세요. 다른 기기의 게임 세션에 영향을 줄 수 있습니다. 연동 실행을 자동 재시도하지 않습니다.

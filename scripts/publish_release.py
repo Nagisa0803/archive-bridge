@@ -8,9 +8,9 @@ repo = os.environ["GITHUB_REPOSITORY"]
 tag = os.environ["GITHUB_REF_NAME"]
 token = os.environ["GITHUB_TOKEN"]
 files = sorted([*folder.glob("*.zip"), *folder.glob("*.tar.gz")])
-if len(files) != 6:
-    raise SystemExit("Expected exactly six platform archives before publishing.")
-for system in ["windows", "linux", "macos"]:
+if len(files) != 4:
+    raise SystemExit("Expected exactly four platform archives before publishing.")
+for system in ["windows", "linux"]:
     for arch in ["x64", "arm64"]:
         if len([p for p in files if "-" + system + "-" + arch + "." in p.name]) != 1:
             raise SystemExit("Incomplete platform matrix.")
@@ -45,7 +45,7 @@ body = f"""## Archive Bridge {tag}
 
 Local-only account export companion for [Archive Lens](https://archive-lens.chiyoda-site.workers.dev/).
 
-- Native Windows, macOS and Linux packages, each in x64 and ARM64.
+- Native Windows and Linux packages, each in x64 and ARM64.
 - English, Chinese, Japanese and Korean local UI.
 - Original Japanese Android APK/XAPK is read locally for package/version and public project configuration.
 - Before every sign-in, fetch the current official Google Play Android version and apply it to all request headers. No stale fallback or automatic transfer retry; new protocol majors stop before authentication.

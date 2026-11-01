@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3
+
+- Discontinue macOS builds and packaging. Future releases support Windows and Linux, each in x64 and ARM64.
+- Publish after the four supported platform packages pass; do not wait for macOS runners.
+
+
 ## 0.3.2
 
 - Keep one archive per collection: atomically update the initial checkpoint with final supplemental data. Interrupted writes preserve the recovery copy.

@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
-parser.add_argument("--platform", required=True, choices=["windows", "linux", "macos"])
+parser.add_argument("--platform", required=True, choices=["windows", "linux"])
 parser.add_argument("--arch", required=True, choices=["x64", "arm64"])
 parser.add_argument("--version", required=True)
 args = parser.parse_args()

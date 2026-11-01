@@ -20,15 +20,14 @@ ZIP新增 `image-links.json`、`image-links.csv`、`image-links.txt`、`photo-li
 
 ## 下载和使用
 
-每个版本在全部检查通过后发布六个原生包：Windows、macOS、Linux 各有 x64 和 ARM64。选择与系统及 CPU 同时匹配的文件，完整解压目录（保留 `_internal`）。无需安装 Python、ADB、Root、注入或改包。
+每个版本在全部检查通过后发布四个原生包：Windows、Linux 各有 x64 和 ARM64。选择与系统及 CPU 同时匹配的文件，完整解压目录（保留 `_internal`）。无需安装 Python、ADB、Root、注入或改包。
 
 | 平台 | x64 | ARM64 |
 | --- | --- | --- |
 | Windows | `windows-x64.zip`，面向 Windows 10/11 | `windows-arm64.zip`，Windows 11 ARM |
 | Linux | `linux-x64.tar.gz`，Ubuntu 22.04 / glibc 2.35+ | `linux-arm64.tar.gz`，Ubuntu 24.04 / glibc 2.39+ |
-| macOS | `macos-x64.tar.gz`，macOS 15 Intel 验证 | `macos-arm64.tar.gz`，macOS 15 Apple Silicon 验证 |
 
-1. Windows 运行 `archive-bridge.exe`；Linux/macOS 运行 `./archive-bridge`。浏览器将自动打开本地向导；未自动打开时，使用终端显示的完整地址。
+1. Windows 运行 `archive-bridge.exe`；Linux 运行 `./archive-bridge`。浏览器将自动打开本地向导；未自动打开时，使用终端显示的完整地址。
 2. 选择自己的未修改 **日服安卓原版 APK/XAPK**（最大 512 MiB）。仅在本机提取公开认证项目配置，处理后删除临时包；重新启动后需再次配置。安装包不上传互联网，也不会修改游戏。
 3. 在游戏中设置引继密码，在本地向导输入游戏引继 ID 和引继密码。不是 Google 或 Apple 密码，切勿发到聊天或 Issue。
 4. 勾选本人帐号和明确授权后，点击“验证并导出 ZIP”。引继认证可能影响另一设备上的游戏会话。不会自动重试引继执行。
@@ -51,7 +50,7 @@ ZIP 包含完整 `User/Get` JSON、原始 `raw/user.pb`、Master 响应、成功
 
 `UNSUPPORTED_APK`：选择正确原版包；`TRANSFER_REJECTED`：核对已保存的游戏引继配置；`IDENTITY_MISMATCH`：停止，目标身份不符且帐号读取被阻止；`PROXY_FAILED/NETWORK_TIMEOUT`：检查本机网络/代理，重试前先检查已保存包。访问拒绝时重开当前程序输出的完整本地地址。保存失败时指定可写目录。
 
-详细错误表、开发命令和发布规则见 [English README](README.md)。GitHub Actions 对六平台运行离线测试、源码隐私检查和编译后二进制自测；全部成功后才发布版本和校验清单。CI 不使用游戏帐号或真实凭据。
+详细错误表、开发命令和发布规则见 [English README](README.md)。GitHub Actions 对四平台运行离线测试、源码隐私检查和编译后二进制自测；全部成功后才发布版本和校验清单。CI 不使用游戏帐号或真实凭据。
 
 [产品设计](docs/PRODUCT.md) · [更新记录](CHANGELOG.md) · [安全说明](SECURITY.md) · [第三方说明](THIRD_PARTY_NOTICES.md)
 

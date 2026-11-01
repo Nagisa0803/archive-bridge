@@ -22,7 +22,7 @@ Each collection now keeps **one ZIP**: the checkpoint is hidden while running an
 
 ## Download the right build
 
-Each version publishes six native packages, after all six jobs pass tests and compiled-program self-tests.
+Each version publishes four native packages, after all four jobs pass tests and compiled-program self-tests.
 
 | Operating system | CPU | Package suffix | Tested runner baseline |
 | --- | --- | --- | --- |
@@ -30,14 +30,12 @@ Each version publishes six native packages, after all six jobs pass tests and co
 | Windows | ARM64 | `windows-arm64.zip` | Windows 11 ARM |
 | Linux | x64 | `linux-x64.tar.gz` | Ubuntu 22.04, glibc 2.35+ |
 | Linux | ARM64 / aarch64 | `linux-arm64.tar.gz` | Ubuntu 24.04, glibc 2.39+ |
-| macOS | Intel x64 | `macos-x64.tar.gz` | macOS 15 Intel |
-| macOS | Apple Silicon | `macos-arm64.tar.gz` | macOS 15 ARM64 |
 
 You do not need Python, ADB, root, injection or a modified APK. Download the package matching both your OS and CPU, then extract the **whole directory**, including `_internal`. Initial binaries are unsigned and not Apple-notarized. `SHA256SUMS` verifies download integrity, not publisher identity; do not disable system-wide security protections.
 
 ## First export
 
-1. Run `archive-bridge.exe` on Windows, or `./archive-bridge` on Linux/macOS. The local wizard opens automatically. If it does not, restart with `--no-browser` to obtain a private manual link. Do not share that active link; its token is removed from the address bar after use. Refreshing requires reopening the original private link.
+1. Run `archive-bridge.exe` on Windows, or `./archive-bridge` on Linux. The local wizard opens automatically. If it does not, restart with `--no-browser` to obtain a private manual link. Do not share that active link; its token is removed from the address bar after use. Refreshing requires reopening the original private link.
 2. Choose your own **original Japanese Android APK or XAPK**, up to 512 MiB. Bridge reads only the public authentication project configuration locally and deletes its temporary upload. No APK or account data is uploaded to the Internet. This configuration stays in memory, so select it again after restarting Bridge.
 3. Set the game's account transfer password in the game. Enter your transfer ID and password **only in the local wizard**. This is the game transfer password, not your Google/Apple password.
 4. Confirm that it is your account and explicitly authorize authentication and necessary reads. Authentication can affect an active session on another device. Click **Authenticate and export ZIP** once; migration execution is never automatically retried.
@@ -99,7 +97,7 @@ python -m unittest discover -s tests -v
 python -m archive_bridge --self-test --data-dir .ci-self-test
 ```
 
-GitHub Actions builds on native Windows/macOS/Linux runners for both architectures. Every build runs offline tests, the public-source gate and a compiled-executable self-test. Version tags such as `v0.2.1` publish all six packages and `SHA256SUMS` only after the complete matrix succeeds. Builds include dependency notices and `build-info.json`. CI never authenticates to the game and needs no account secrets. A separate source-quality workflow enforces readable Python/frontend formatting and static checks on main and pull requests.
+GitHub Actions builds on native Windows/Linux runners for both architectures. Every build runs offline tests, the public-source gate and a compiled-executable self-test. Version tags such as `v0.2.1` publish all four packages and `SHA256SUMS` only after the complete matrix succeeds. Builds include dependency notices and `build-info.json`. CI never authenticates to the game and needs no account secrets. A separate source-quality workflow enforces readable Python/frontend formatting and static checks on main and pull requests.
 
 [Product design and upstream references](docs/PRODUCT.md) · [Changelog](CHANGELOG.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
