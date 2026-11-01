@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+release/
+*.spec
+ArchiveBridgeData/
+*.zip
+*.tar.gz
+.env*
+.ci-self-test/
+.ci-native-test/
+.ruff_cache/

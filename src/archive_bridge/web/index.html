@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Archive Bridge</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/">◈ Archive Bridge</a>
+      <div class="header-actions">
+        <a
+          href="https://github.com/Nagisa0803/archive-bridge"
+          target="_blank"
+          rel="noreferrer"
+          >GitHub ↗</a
+        ><select id="language" aria-label="Language">
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+        </select>
+      </div>
+    </header>
+    <main>
+      <div class="eyebrow">LOCAL ACCOUNT EXPORTER</div>
+      <h1 data-i="title"></h1>
+      <p class="lead" data-i="lead"></p>
+      <div class="steps">
+        <span data-i="step1"></span><span data-i="step2"></span
+        ><span data-i="step3"></span>
+      </div>
+      <div class="columns">
+        <section class="panel">
+          <div class="section-number">01 / SETUP</div>
+          <h2 data-i="setup"></h2>
+          <p data-i="apkHint"></p>
+          <label class="file"
+            ><span data-i="choose"></span
+            ><input type="file" id="apk" accept=".apk,.xapk"
+          /></label>
+          <p id="profile" class="muted"></p>
+          <hr />
+          <div class="section-number">02 / EXPORT</div>
+          <h2 data-i="account"></h2>
+          <form id="form">
+            <label
+              ><span data-i="id"></span
+              ><input
+                id="uid"
+                autocomplete="off"
+                required
+                maxlength="64"
+                pattern="[A-Za-z0-9]{4,64}"
+                spellcheck="false" /></label
+            ><label
+              ><span data-i="password"></span
+              ><input
+                id="password"
+                type="password"
+                autocomplete="off"
+                required
+                minlength="8"
+                maxlength="16"
+                pattern="[A-Za-z0-9]{8,16}"
+            /></label>
+            <details>
+              <summary data-i="advanced"></summary>
+              <label
+                ><span data-i="proxy"></span
+                ><input
+                  id="proxy"
+                  type="url"
+                  placeholder="http://127.0.0.1:7892"
+                  autocomplete="off"
+              /></label>
+            </details>
+            <label class="consent"
+              ><input id="confirm" type="checkbox" required /><span
+                data-i="consent"
+              ></span></label
+            ><button
+              id="collect"
+              type="submit"
+              class="primary"
+              data-i="collect"
+              disabled
+            ></button>
+          </form>
+        </section>
+        <section class="panel">
+          <div class="section-number">03 / YOUR ARCHIVES</div>
+          <h2 data-i="progress"></h2>
+          <p id="stage"></p>
+          <p id="game-version" class="muted"></p>
+          <progress id="progress" value="0" max="100"></progress>
+          <p id="notice" role="status" aria-live="polite"></p>
+          <button id="cancel" type="button" data-i="cancel" hidden></button>
+          <h3 data-i="saved"></h3>
+          <code id="output"></code>
+          <div id="backups"></div>
+          <div class="note">
+            <strong data-i="privacyTitle"></strong>
+            <p data-i="privacy"></p>
+            <p data-i="coverage"></p>
+          </div>
+          <a
+            class="viewer"
+            href="https://archive-lens.chiyoda-site.workers.dev/"
+            target="_blank"
+            rel="noreferrer"
+            data-i="viewer"
+          ></a
+          ><a
+            href="https://archive-lens.chiyoda-site.workers.dev/guide/"
+            target="_blank"
+            rel="noreferrer"
+            data-i="guide"
+          ></a>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <span id="version"></span
+      ><span
+        >Archive Bridge ↔
+        <a
+          href="https://github.com/Nagisa0803/archive-lens"
+          target="_blank"
+          rel="noreferrer"
+          >Archive Lens</a
+        ></span
+      >
+    </footer>
+  </body>
+</html>

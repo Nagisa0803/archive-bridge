@@ -1,0 +1,23 @@
+name: Source quality
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m ruff format --check .
+      - run: python -m ruff check --select E9,F63,F7,F82 .
+      - run: python scripts/check_public.py
+      - run: npx --yes --package=prettier@3.6.2 prettier --check src/archive_bridge/web/app.js src/archive_bridge/web/index.html src/archive_bridge/web/style.css

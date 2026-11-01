@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "archive-bridge"
+version = "0.2.1"
+description = "Local account export companion for Archive Lens"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "AGPL-3.0-only"}
+authors = [{name = "Marcuslacia"}]
+dependencies = ["cryptography==46.0.3", "h2==4.3.0", "protobuf==6.33.5"]
+[project.scripts]
+archive-bridge = "archive_bridge.cli:main"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.setuptools.package-data]
+archive_bridge = ["resources/*", "web/*"]
