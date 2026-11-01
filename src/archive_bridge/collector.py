@@ -86,6 +86,7 @@ def collect(
             "Returned account does not match the authenticated account.",
         )
     coverage = {
+        "collectionState": "collecting_supplemental",
         "clientVersionInfo": version_info,
         "userGet": "complete_response_preserved",
         "allAccountDomainsComplete": False,
@@ -129,6 +130,7 @@ def collect(
     else:
         coverage["imageLinks"] = {"requested": False}
     coverage["supplementalFailures"] = failures
+    coverage["collectionState"] = "finished_with_warnings" if failures else "finished"
     transport.check()
     progress(stage="save", percent=95, backup=base)
     result = write_archive(
@@ -142,6 +144,7 @@ def collect(
         extra,
         supplemental,
         image_links,
+        replace_filename=base["filename"],
     )
     progress(stage="done", percent=100, backup=result)
     token = None

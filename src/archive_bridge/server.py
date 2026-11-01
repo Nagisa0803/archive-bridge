@@ -34,18 +34,36 @@ class Application:
 
     def list_backups(self):
         result = []
+        with self.lock:
+            running = self.state.get("status") == "running"
+            active = self.state.get("backup", {}).get("filename") if running else None
         for path in sorted(self.output.glob("archive-*.zip"), reverse=True)[:100]:
+            if path.name == active:
+                continue
             try:
                 with zipfile.ZipFile(path) as z:
                     if z.getinfo("manifest.json").file_size > 1024 * 1024:
                         continue
                     manifest = json.loads(z.read("manifest.json"))
+                if (
+                    running
+                    and manifest.get("coverage", {}).get("collectionState")
+                    == "collecting_supplemental"
+                ):
+                    continue
                 result.append(
                     {
                         "filename": path.name,
                         "bytes": path.stat().st_size,
                         "createdAt": manifest.get("createdAt"),
                         "coverage": manifest.get("coverage", {}),
+                        "archiveState": "partial"
+                        if manifest.get("coverage", {}).get("collectionState")
+                        in {"collecting_supplemental", "finished_with_warnings"}
+                        else "final"
+                        if manifest.get("coverage", {}).get("collectionState")
+                        == "finished"
+                        else "legacy",
                     }
                 )
             except (OSError, ValueError, zipfile.BadZipFile, KeyError):

@@ -58,22 +58,63 @@ def collect_image_links(user, rpc, token, version, extra, failures, check, progr
     )
     links = {}
     completed = 0
-    if len(assets) > 20000:
-        failures.append({"domain": "photo-links", "errorCode": "PHOTO_LIMIT"})
-    else:
-        for start in range(0, len(assets), 50):
+    retry_count = 0
+    smaller_batches = False
+
+    def photo_read(batch):
+        nonlocal retry_count, smaller_batches
+        try:
+            return rpc(
+                "/api.Photo/GetImageURL",
+                {"type": 3, "assetIds": batch},
+                token=token,
+                version=version,
+            ), batch
+        except BridgeError as error:
+            if error.code != "RPC_FAILED" or str(
+                error.details.get("grpcStatus")
+            ) not in {"13", "14"}:
+                raise
             check()
-            batch = assets[start : start + 50]
-            progress(
-                stage="photo_links", percent=82 + int(10 * start / max(1, len(assets)))
-            )
-            try:
-                response, raw = rpc(
+            if retry_count < 1:
+                retry_count += 1
+                try:
+                    return rpc(
+                        "/api.Photo/GetImageURL",
+                        {"type": 3, "assetIds": batch},
+                        token=token,
+                        version=version,
+                    ), batch
+                except BridgeError as repeated:
+                    if repeated.code != "RPC_FAILED" or str(
+                        repeated.details.get("grpcStatus")
+                    ) not in {"13", "14"}:
+                        raise
+            if len(batch) > 10 and not smaller_batches:
+                smaller_batches = True
+                batch = batch[:10]
+                check()
+                return rpc(
                     "/api.Photo/GetImageURL",
                     {"type": 3, "assetIds": batch},
                     token=token,
                     version=version,
-                )
+                ), batch
+            raise
+
+    if len(assets) > 20000:
+        failures.append({"domain": "photo-links", "errorCode": "PHOTO_LIMIT"})
+    else:
+        start = 0
+        batch_index = 0
+        while start < len(assets):
+            check()
+            batch = assets[start : start + (10 if smaller_batches else 50)]
+            progress(
+                stage="photo_links", percent=82 + int(10 * start / max(1, len(assets)))
+            )
+            try:
+                (response, raw), batch = photo_read(batch)
                 rows = response.get("urlList", [])
                 if not isinstance(rows, list) or any(
                     row.get("assetId") not in batch for row in rows
@@ -92,11 +133,13 @@ def collect_image_links(user, rpc, token, version, extra, failures, check, progr
                     if out.get("origUrl") or out.get("tmbUrl"):
                         validated[asset] = out
                 links.update(validated)
-                extra[f"raw/rpc/photo_get_image_url_{start // 50:04}.pb"] = raw
-                extra[f"raw/rpc/photo_get_image_url_{start // 50:04}.json"] = (
+                extra[f"raw/rpc/photo_get_image_url_{batch_index:04}.pb"] = raw
+                extra[f"raw/rpc/photo_get_image_url_{batch_index:04}.json"] = (
                     json_bytes(response)
                 )
                 completed += len(batch)
+                start += len(batch)
+                batch_index += 1
             except Exception as e:
                 failures.append(
                     {
@@ -104,6 +147,17 @@ def collect_image_links(user, rpc, token, version, extra, failures, check, progr
                         "errorCode": e.code
                         if isinstance(e, BridgeError)
                         else "READ_FAILED",
+                        "batchIndex": batch_index,
+                        "batchSize": len(batch),
+                        **(
+                            {
+                                key: e.details[key]
+                                for key in ("httpStatus", "grpcStatus")
+                                if key in e.details
+                            }
+                            if isinstance(e, BridgeError)
+                            else {}
+                        ),
                     }
                 )
                 break
@@ -150,6 +204,8 @@ def collect_image_links(user, rpc, token, version, extra, failures, check, progr
     ).encode("utf-8")
     coverage = {
         "requested": True,
+        "photoReadRetryCount": retry_count,
+        "smallerPhotoBatchesUsed": smaller_batches,
         "cardRecords": len(user.get("cards", [])),
         "cardPreviewLinks": len(cards),
         "photoAssets": len(assets),

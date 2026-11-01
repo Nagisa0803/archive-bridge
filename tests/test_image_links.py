@@ -147,3 +147,44 @@ class ImageLinkTests(unittest.TestCase):
             with self.subTest(url=url):
                 with self.assertRaises((BridgeError, ValueError)):
                     validate_url(url)
+
+
+class TransientPhotoTransport(PhotoTransport):
+    def __init__(self, large_batches_fail=False):
+        super().__init__(count=21)
+        self.photo_attempts = 0
+        self.large_batches_fail = large_batches_fail
+
+    def rpc(self, path, values=None, token=None, version=None):
+        if path == "/api.Photo/GetImageURL":
+            self.photo_attempts += 1
+            if self.photo_attempts == 1 or (
+                self.large_batches_fail and len(values["assetIds"]) > 10
+            ):
+                raise BridgeError(
+                    "RPC_FAILED",
+                    "Synthetic transient photo error",
+                    details={"httpStatus": "200", "grpcStatus": "13"},
+                )
+        return super().rpc(path, values, token, version)
+
+
+class PhotoRecoveryTests(unittest.TestCase):
+    def test_read_only_transient_retry_does_not_repeat_authentication(self):
+        with tempfile.TemporaryDirectory() as folder:
+            transport = TransientPhotoTransport()
+            result = collect(transport, UID, PASSWORD, folder, include_image_links=True)
+            self.assertEqual(transport.calls.count("/api.Migration/Execute"), 1)
+            self.assertEqual(result["coverage"]["imageLinks"]["photoReadRetryCount"], 1)
+            self.assertTrue(result["coverage"]["imageLinks"]["photoURLReadsComplete"])
+
+    def test_rejected_large_batches_fall_back_once_without_guessing_assets(self):
+        with tempfile.TemporaryDirectory() as folder:
+            transport = TransientPhotoTransport(large_batches_fail=True)
+            result = collect(transport, UID, PASSWORD, folder, include_image_links=True)
+            self.assertEqual(
+                [len(x["assetIds"]) for x in transport.photo_batches], [10, 10, 1]
+            )
+            self.assertTrue(result["coverage"]["imageLinks"]["smallerPhotoBatchesUsed"])
+            self.assertEqual(result["coverage"]["imageLinks"]["photoAssetsQueried"], 21)
+            self.assertEqual(transport.photo_attempts, 5)

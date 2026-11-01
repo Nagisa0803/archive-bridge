@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.2
+
+- Keep one archive per collection: atomically update the initial checkpoint with final supplemental data. Interrupted writes preserve the recovery copy.
+- Hide the active checkpoint from downloads; distinguish final, recovery and historical archives.
+- Show optional photo-read failures and credential-free HTTP/gRPC status codes instead of implying complete coverage.
+
+
 ## 0.3.1
 
 - Add an original Archive Bridge app icon at 16–256 pixel sizes in Windows executables.

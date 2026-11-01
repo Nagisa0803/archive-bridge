@@ -16,6 +16,10 @@ The local wizard enables **Include image links** by default; clear it to skip ex
 The ZIP adds `image-links.json`, `image-links.csv`, `image-links.txt`, and a Lens-compatible `photo-links.json`; card/photo mappings are also attached to `account.json`. Photo links may expire or contain access parameters. Keep the entire archive and its links private. Missing card previews and photo URLs are counted in coverage; a returned URL is not proof that an image was backed up. No new live account authentication was used to validate this release; the integration is covered by synthetic tests.
 
 
+
+Each collection now keeps **one ZIP**: the checkpoint is hidden while running and atomically updated with final supplemental results. A failed final write preserves the recovery copy. Warnings and safe HTTP/gRPC status codes expose failed photo reads; a finished workflow is not a guarantee of complete photo coverage. Only transient photo reads may be retried once, with a bounded smaller-batch fallback; transfer authentication is never retried.
+
+
 ## Download the right build
 
 Each version publishes six native packages, after all six jobs pass tests and compiled-program self-tests.

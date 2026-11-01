@@ -1,4 +1,23 @@
 const COPY = {
+  finalArchive: ["Final archive", "最终包", "最終アーカイブ", "최종 백업"],
+  partialArchive: [
+    "Recovery archive · supplemental reads incomplete",
+    "恢复包 · 部分补采未完成",
+    "復旧用・補足取得が未完了",
+    "복구용 · 추가 수집 미완료",
+  ],
+  legacyArchive: [
+    "Previous archive",
+    "历史档案",
+    "以前のアーカイブ",
+    "이전 백업",
+  ],
+  completeWithWarnings: [
+    "The archive is saved, but some supplemental reads failed. Missing photo URLs are not a complete photo backup.",
+    "档案已保存，但部分补采失败；缺失的照片链接不能当作已备份。",
+    "保存しましたが一部の補足取得に失敗しました。未取得の写真URLはバックアップ済みではありません。",
+    "백업은 저장했지만 일부 추가 수집이 실패했습니다. 누락된 사진 URL은 백업 완료가 아닙니다.",
+  ],
   photo_links: [
     "Reading owned photo URLs",
     "正在读取已有照片链接",
@@ -335,8 +354,24 @@ function render() {
     : t("versionPending");
   if (job.error) notice(job.error.code + " · " + job.error.message, true);
   else if (job.status === "complete") {
-    noticeKey = "completeNote";
-    notice(t(noticeKey));
+    const failures = job.backup?.coverage?.supplementalFailures || [];
+    noticeKey = failures.length ? "completeWithWarnings" : "completeNote";
+    const diagnostics = failures
+      .map((x) =>
+        [
+          x.domain,
+          x.errorCode,
+          x.httpStatus ? "HTTP " + x.httpStatus : "",
+          x.grpcStatus ? "gRPC " + x.grpcStatus : "",
+        ]
+          .filter(Boolean)
+          .join(" · "),
+      )
+      .join("; ");
+    notice(
+      t(noticeKey) + (diagnostics ? " " + diagnostics : ""),
+      failures.length > 0,
+    );
   }
   const signature = JSON.stringify(state.backups) + lang;
   if (lastList === signature) return;
@@ -353,7 +388,18 @@ function render() {
     row.className = "backup";
     const label = document.createElement("div");
     label.textContent =
-      file.filename + " · " + (file.bytes / 1024 / 1024).toFixed(2) + " MiB";
+      t(
+        file.archiveState === "final"
+          ? "finalArchive"
+          : file.archiveState === "partial"
+            ? "partialArchive"
+            : "legacyArchive",
+      ) +
+      " · " +
+      file.filename +
+      " · " +
+      (file.bytes / 1024 / 1024).toFixed(2) +
+      " MiB";
     const button = document.createElement("button");
     button.textContent = t("download");
     button.addEventListener("click", async () => {

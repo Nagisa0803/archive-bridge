@@ -1,6 +1,6 @@
-"""Atomic immutable ZIPs with original protobuf and portable Archive Lens metadata."""
+"""Atomic per-collection ZIPs with original protobuf and portable Archive Lens metadata."""
 
-import datetime, hashlib, json, os, uuid, zipfile
+import datetime, hashlib, json, os, re, uuid, zipfile
 from pathlib import Path
 from .errors import BridgeError
 
@@ -34,6 +34,7 @@ def write_archive(
     extra=None,
     supplemental=None,
     image_links=None,
+    replace_filename=None,
 ):
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -75,8 +76,15 @@ def write_archive(
         "coverage": coverage,
     }
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"archive-{stamp}-{uuid.uuid4().hex[:8]}.zip"
+    name = replace_filename or f"archive-{stamp}-{uuid.uuid4().hex[:8]}.zip"
+    if not re.fullmatch(r"archive-\d{8}T\d{6}Z-[a-f0-9]{8}\.zip", name):
+        raise BridgeError("ARCHIVE_FAILED", "Invalid collection archive name.")
     target = folder / name
+    if replace_filename is not None:
+        with zipfile.ZipFile(target) as existing:
+            previous = json.loads(existing.read("manifest.json"))
+        if previous.get("accountFingerprint") != snapshot["accountFingerprint"]:
+            raise BridgeError("ARCHIVE_FAILED", "Collection archive identity changed.")
     temporary = folder / (name + ".partial")
     try:
         with open(temporary, "xb") as stream:

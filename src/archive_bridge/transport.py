@@ -177,6 +177,10 @@ class Transport:
                 raise BridgeError(
                     "RPC_FAILED",
                     f"Server rejected {path} (HTTP {returned.get(':status', '?')}, gRPC {returned.get('grpc-status', '?')}). No transfer retry was performed.",
+                    details={
+                        "httpStatus": returned.get(":status", "?"),
+                        "grpcStatus": returned.get("grpc-status", "?"),
+                    },
                 )
             try:
                 frames = codec.frames(
