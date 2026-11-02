@@ -6,7 +6,7 @@ A local account exporter for **[Archive Lens](https://github.com/Nagisa0803/arch
 
 **[Downloads](https://github.com/Nagisa0803/archive-bridge/releases)** · **[Live viewer](https://archive-lens.chiyoda-site.workers.dev/)** · **[Export/import handbook](https://archive-lens.chiyoda-site.workers.dev/guide/)**
 
-**Current stable release: [v0.2.1](https://github.com/Nagisa0803/archive-bridge/releases/latest).** Before every sign-in, Bridge reads the latest official Japanese Android version. CI uses synthetic accounts, never real credentials.
+**Current stable release: [v0.3.3](https://github.com/Nagisa0803/archive-bridge/releases/latest).** Before every sign-in, Bridge reads the latest official Japanese Android version. CI uses synthetic accounts, never real credentials.
 
 
 ### Image links (v0.3.0)
@@ -97,7 +97,7 @@ python -m unittest discover -s tests -v
 python -m archive_bridge --self-test --data-dir .ci-self-test
 ```
 
-GitHub Actions builds on native Windows/Linux runners for both architectures. Every build runs offline tests, the public-source gate and a compiled-executable self-test. Version tags such as `v0.2.1` publish all four packages and `SHA256SUMS` only after the complete matrix succeeds. Builds include dependency notices and `build-info.json`. CI never authenticates to the game and needs no account secrets. A separate source-quality workflow enforces readable Python/frontend formatting and static checks on main and pull requests.
+GitHub Actions builds on native Windows/Linux runners for both architectures. Every build runs offline tests, the public-source gate and a compiled-executable self-test. Version tags such as `v0.3.3` publish all four packages and `SHA256SUMS` only after the complete matrix succeeds. Builds include dependency notices and `build-info.json`. CI never authenticates to the game and needs no account secrets. A separate source-quality workflow enforces readable Python/frontend formatting and static checks on main and pull requests.
 
 [Product design and upstream references](docs/PRODUCT.md) · [Changelog](CHANGELOG.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
